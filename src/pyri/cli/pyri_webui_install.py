@@ -103,7 +103,8 @@ def install_direct_packages(pruned_install, webui_wheels_dir, pip_passthrough_ar
             if url.startswith('file://') and file_uri_to_path(url).is_dir():
                 pkg_dir = file_uri_to_path(url)
                 subprocess.check_call([sys.executable, "-mpip", "wheel", f"{pkg_dir}", 
-                    f"--wheel-dir={webui_wheels_dir}", "--no-deps"] + pip_passthrough_args)
+                    f"--wheel-dir={webui_wheels_dir}", "--no-deps",
+                    "--no-build-isolation", "--no-verify"] + pip_passthrough_args)
             else:
                 subprocess.check_call([sys.executable, "-mpip", "download", f"{url}", f"--dest={webui_wheels_dir}", 
                     "--no-deps"] + pip_passthrough_args)
